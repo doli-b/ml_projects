@@ -1,0 +1,25 @@
+Task 1: Label and Data Leakage Identification
+
+Label Column: repeat_purchase_flag
+Justification: This column represents the target outcome we are trying to predict 
+(whether a customer makes a repeat purchase within 30 days).
+Data Leakage Column: discount_used_on_repeat_order
+Justification: This column introduces data leakage because it contains information about the repeat purchase itself 
+(the discount applied), which is unknown at the time of prediction and only exists after the target event has occurred. 
+
+Task 2: Recommended Pre-modeling Steps
+
+Exploratory Data Analysis (EDA)
+Why it matters: EDA helps visualize data distributions, identify missing values, and uncover anomalies or outliers that, 
+if ignored, can degrade model performance. It also helps detect multicollinearity between features, ensuring the model isn't 
+confused by redundant information.
+
+Train/Test Split (specifically Time-Based Splitting)
+Why it matters: Because this is a predictive task based on time (30-day window), splitting data chronologically 
+is crucial to avoid "temporal leakage," where future information leaks into the past. Using a random split 
+might use information from "future" customers to predict "past" customers, leading to over-optimistic results.
+
+Feature Engineering and Scaling
+Why it matters: Converting raw data into meaningful features—such as converting days_since_last_order into
+categorical buckets or scaling monetary values—improves the model's ability to identify patterns. 
+While Gradient Boosting is robust, engineering can simplify the learning process and reduce noise.
